@@ -2,6 +2,17 @@
     ViewData("Title") = "Home Page"
 End Code
 
+<h3>@ViewData("Message")</h3>
+
+<!--検索部-->
+@Using Html.BeginForm("Search", "Home", FormMethod.Post, New With {.class = "form-inline"})
+    @Html.Label("keyword", "Column01:", New With {.class = "control-label"})
+    @Html.TextBox("keyword", "", New With {.class = "form-control"})
+    @<text>
+        <input type="submit" value="検索" class="btn btn-link" />
+    </text>
+End Using
+<!--
 <div class="jumbotron">
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
@@ -29,3 +40,4 @@ End Code
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+-->
