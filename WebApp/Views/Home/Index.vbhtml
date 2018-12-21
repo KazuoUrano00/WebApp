@@ -2,16 +2,29 @@
     ViewData("Title") = "Home Page"
 End Code
 
-<h3>@ViewData("Message")</h3>
+<script type="text/javascript" src="../Scripts/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="../Scripts/jquery.validate.min.js"></script>
+@*<script type="text/javascript" src="../Scripts/val.js"></script>*@
+<script type="text/javascript" src="../Scripts/common.js"></script>
+
+<h3 id="topixTitle">@ViewData("Message")</h3>
+
+<form>
+    <input type="button" value="赤文字" onclick="chgColor()">
+</form>
 
 <!--検索部-->
 @Using Html.BeginForm("Search", "Home", FormMethod.Post, New With {.class = "form-inline"})
-    @Html.Label("keyword", "Column01:", New With {.class = "control-label"})
+    @Html.Label("keyword", "ID:", New With {.class = "control-label"})
     @Html.TextBox("keyword", "", New With {.class = "form-control"})
     @<text>
-        <input type="submit" value="検索" class="btn btn-link" />
+    <br />
+        <input type="submit" value="検索" class="btn" name="SearchBtn" />
+        <!--input type="submit" value="検索" class="btn btn-link" name="btn" /-->
     </text>
 End Using
+<div id="time"></div>
+
 <!--
 <div class="jumbotron">
     <h1>ASP.NET</h1>

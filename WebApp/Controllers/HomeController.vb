@@ -16,6 +16,12 @@ Public Class HomeController
         Return View()
     End Function
 
+    Function Check() As ActionResult
+        ViewData("Message") = "Check."
+
+        Return View()
+    End Function
+
     Function Contact() As ActionResult
         ViewData("Message") = "Your contact page."
 
@@ -27,56 +33,62 @@ Public Class HomeController
         'Return View(db.TEST01.Where(Function(b) b.column01 = keyword))
         Dim MB As String
 
-        Try
-            Using con As New SqlConnection
-                Using cmd As New SqlCommand
-                    ' 接続文字列の設定（SQL Server 2008 Express Edition）
-                    con.ConnectionString =
-                          "Data Source=DESKTOP-HMSGQGP\SQLEXPRESS;Initial Catalog=Test;Integrated Security=True"
+        If keyword <> "" Then
+            MB = ""
+            Try
+                Using con As New SqlConnection
+                    Using cmd As New SqlCommand
+                        ' 接続文字列の設定（SQL Server 2008 Express Edition）
+                        con.ConnectionString =
+                              "Data Source=DESKTOP-HMSGQGP\SQLEXPRESS;Initial Catalog=Test;Integrated Security=True"
 
-                    ' SqlCommand.Connectionプロパティの設定
-                    cmd.Connection = con
+                        ' SqlCommand.Connectionプロパティの設定
+                        cmd.Connection = con
 
-                    ' DB接続
-                    con.Open()
+                        ' DB接続
+                        con.Open()
 
-                    ' SQL文の設定
-                    cmd.CommandText = "SELECT * FROM MEMBERS "
-                    cmd.CommandText += "WHERE ID = " + keyword
+                        ' SQL文の設定
+                        cmd.CommandText = "SELECT * FROM MEMBERS "
+                        cmd.CommandText += "WHERE ID = " + keyword
 
-                    ' 商品マスター表からレコード読込
-                    Using dr As SqlDataReader = cmd.ExecuteReader()
-                        ' 取得レコード有無チェック
-                        If dr.HasRows = True Then
-                            ' レコードが取得できた時の処理
-                            While dr.Read()
-                                ' セルのテンプレートを設定
-                                'Dim row As New DataGridViewRow
-                                'row.CreateCells(Me.DataGridView1)
-                                ' セルに値をセット
-                                'Row.Cells(0).Value = CStr(dr("商品コード"))
-                                'row.Cells(1).Value = CStr(dr("商品名称"))
-                                'row.Cells(2).Value = CInt(dr("販売単価"))
-                                ' データグリッドビューに行を追加
-                                'Me.DataGridView1.Rows.Add(row)
-                                MB = CStr(dr("NAME"))
-                            End While
-                        Else
-                            ' レコードが取得できなかった時の処理
-                            MB = "レコードはありませんでした。"
-                        End If
+                        ' 商品マスター表からレコード読込
+                        Using dr As SqlDataReader = cmd.ExecuteReader()
+                            ' 取得レコード有無チェック
+                            If dr.HasRows = True Then
+                                ' レコードが取得できた時の処理
+                                While dr.Read()
+                                    ' セルのテンプレートを設定
+                                    'Dim row As New DataGridViewRow
+                                    'row.CreateCells(Me.DataGridView1)
+                                    ' セルに値をセット
+                                    'Row.Cells(0).Value = CStr(dr("商品コード"))
+                                    'row.Cells(1).Value = CStr(dr("商品名称"))
+                                    'row.Cells(2).Value = CInt(dr("販売単価"))
+                                    ' データグリッドビューに行を追加
+                                    'Me.DataGridView1.Rows.Add(row)
+                                    MB = CStr(dr("NAME"))
+                                End While
+                            Else
+                                ' レコードが取得できなかった時の処理
+                                MB = "レコードはありませんでした。"
+                            End If
+                        End Using
+
                     End Using
-
                 End Using
-            End Using
 
-        Catch ex As Exception
-            ' 例外が発生した時の処理
-            MB = ex.ToString
+            Catch ex As Exception
+                ' 例外が発生した時の処理
+                MB = ex.ToString
 
-        End Try
+            End Try
 
-        ViewData("Message") = MB
+            ViewData("Message") = MB
+            'Else
+            '    ViewData("Message") = "値を入れていください。"
+        End If
+
         Return View()
 
     End Function
