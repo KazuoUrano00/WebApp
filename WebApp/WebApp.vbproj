@@ -223,6 +223,7 @@
     <Content Include="Scripts\val.js" />
     <Content Include="Views\Home\Check.vbhtml" />
     <None Include="Views\Home\date_select.vbhtml" />
+    <Content Include="Views\Home\gistfile1.html" />
     <Content Include="Views\Home\Search.vbhtml" />
   </ItemGroup>
   <ItemGroup>
