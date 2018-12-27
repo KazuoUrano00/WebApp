@@ -9,7 +9,6 @@ Public Class HomeController
         ViewData("Message") = "Please enter your search criteria."
         Return View()
     End Function
-
     Function About() As ActionResult
         ViewData("Message") = "Your application description page."
 
@@ -27,12 +26,11 @@ Public Class HomeController
 
         Return View()
     End Function
-    Function Search(ByVal keyword As String)
+    Function Search(ByVal keyword As String, ByVal keyword1 As String)
         'Dim db As New 
 
         'Return View(db.TEST01.Where(Function(b) b.column01 = keyword))
         Dim MB As String
-
         If keyword <> "" Then
             MB = ""
             Try
@@ -85,9 +83,25 @@ Public Class HomeController
             End Try
 
             ViewData("Message") = MB
+
             'Else
             '    ViewData("Message") = "値を入れていください。"
         End If
+        If keyword1 <> "" Then
+            Dim r As New System.Text.RegularExpressions.Regex("[\uFF61-\uFF9F]")
+
+            '半角カナ文字が含まれているか調べる 
+            If r.IsMatch(keyword1) Then
+                ViewData("Message") = "半角カナ文字が含まれています"
+            End If
+        End If
+
+
+        Return View()
+
+    End Function
+    Function date_select() As ActionResult
+        ViewData("Message") = "Your contact page."
 
         Return View()
 
